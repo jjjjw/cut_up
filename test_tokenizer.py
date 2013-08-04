@@ -1,4 +1,3 @@
-import unittest
 from unittest import TestCase
 
 class TestMultiSub(TestCase):
@@ -27,16 +26,20 @@ class TestMultiSub(TestCase):
 
         """
         from multisub import MultiSub
+        import re
 
         silly_replacements = MultiSub({
-            r"\.": "!",
+            r'\.': '!',
+            r',': lambda x: ' ' + x,
+            r'sky above': lambda x: re.sub(r'(sky)\s(above)', r'\2 \1', x),  # Manually curry subgroups for now
         })
 
         res = silly_replacements.sub(self.sample_sentence)
         self.assertEqual(res,
-            "The sky above the port was the color of television! tuned to a dead channel!")
+            "The above sky the port was the color of television , tuned to a dead channel!")
 
 
 if __name__ == '__main__':
-    unittest.main()
+    import unittest
 
+    unittest.main()
