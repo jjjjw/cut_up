@@ -1,8 +1,8 @@
 from multisub import MultiSub
 
 CLEAN_WORDS = MultiSub({
-    r'[^\w\s.]': None, # abbreviations currently unhandled
-    r'\.$': None, # sentence periods currently unhandled
+    r'[^\w\d\s.]': None,
+    r'\.|!|\?': None, # abbreviations currently unhandled
 })
 
 def word_tokenize(text: "string"):
