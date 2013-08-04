@@ -10,6 +10,7 @@ CLEAN_WORDS = MultiSub({
 def word_tokenize(text: "string"):
     """Dramatically simple word tokenizer, returns the list of words.
 
+    TODO: normalize symbol boundaries, denormalize symbol boundaries.
     """
     text = CLEAN_WORDS.sub(text)
     return text.split()
