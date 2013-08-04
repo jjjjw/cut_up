@@ -5,8 +5,8 @@ def cut_up(text: "string", seed=1):
 
     TODO: find slices, shuffle slices
     """
-    from tokenizer import word_tokenize
+    from normalizer import normalize_symbol_boundaries
 
-    words = word_tokenize(text)
+    tokens = normalize_symbol_boundaries(text).split()
 
-    return words
+    return tokens
