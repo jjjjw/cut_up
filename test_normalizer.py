@@ -16,15 +16,6 @@ class TestNormalize(TestCase):
         res = normalize_symbol_boundaries(self.sample_sentence)
         self.assertEqual(res, self.sample_norm)
 
-    def test_denormalizer(self):
-        """It should remove whitespace before punctuation.
-
-        """
-        from normalizer import denormalize_symbol_boundaries
-
-        res = denormalize_symbol_boundaries(self.sample_norm)
-        self.assertEqual(res, self.sample_sentence)
-
 
 if __name__ == '__main__':
     import unittest
