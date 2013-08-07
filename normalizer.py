@@ -1,25 +1,31 @@
-import re
-import string
+from re import compile
+from re import escape
+from re import sub
+from string import punctuation
 
 
-def _pattern():
+def _pattern() -> type(compile('')):
     """Compile the substitution regex pattern for use.
 
     """
-    punct = re.escape(string.punctuation)
+    punct = escape(punctuation)
     punct = r'([%s])' % punct
 
-    return re.compile(punct)
+    return compile(punct)
 
 
 PUNCT = _pattern()
 
 
-def normalize_symbol_boundaries(text: "string"):
+def _add_whitespace(text: str) -> str:
+    return sub(PUNCT, r' \1 ', text)
+
+def _smooth_superfluous_whitespace(text: str) -> str:
+    return sub(r'\s+', ' ', text).strip()
+
+
+def normalize_symbol_boundaries(text: str) -> str:
     """Given a text, inserts whitespace between words, commas, quotations, parens, etc.
 
     """
-    normed = re.sub(PUNCT, r' \1 ', text)
-    normed = re.sub(r'\s+', ' ', normed).strip()  # Smooth superfluous whitespace
-
-    return normed
+    return _smooth_superfluous_whitespace(_add_whitespace(text))
