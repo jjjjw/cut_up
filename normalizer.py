@@ -1,12 +1,11 @@
 import re
+import string
 
 
 def _pattern():
     """Compile the substitution regex pattern for use.
 
     """
-    import string
-
     punct = re.escape(string.punctuation)
     punct = r'([%s])' % punct
 
