@@ -17,14 +17,10 @@ def _steps() -> tuple:
 
     """
     punct_re = _punct_re()
-
-    def add_whitespace(text: str) -> str:
-        return re_sub(punct_re, r' \1 ', text)
-
-    def smooth_superfluous_whitespace(text: str) -> str:
-        return re_sub(r'\s+', ' ', text).strip()
-
-    return (add_whitespace, smooth_superfluous_whitespace)
+    return (
+        lambda text: re_sub(punct_re, r' \1 ', text),  # Add whitespace
+        lambda text: re_sub(r'\s+', ' ', text).strip(),  # Smooth superfluous whitespace
+    )
 
 
 STEPS = _steps()
