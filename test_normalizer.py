@@ -1,5 +1,4 @@
 from normalizer import normalize_symbol_boundaries
-from unittest import main
 from unittest import TestCase
 
 
@@ -18,4 +17,6 @@ class TestNormalize(TestCase):
 
 
 if __name__ == '__main__':
+    from unittest import main
+
     main()

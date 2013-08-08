@@ -1,4 +1,3 @@
-from functools import reduce
 from re import compile as re_compile
 from re import escape as re_escape
 from re import sub as re_sub
@@ -12,20 +11,8 @@ def _punct_re() -> type(re_compile('')):
     return re_compile(r'([%s])' % re_escape(punctuation))
 
 
-def _steps() -> list:
-    """The normalization steps.
-
-    """
-    punct_re = _punct_re()
-    return [
-        lambda text: re_sub(punct_re, r' \1 ', text),  # Add whitespace
-        lambda text: re_sub(r'\s+', ' ', text).strip(),  # Smooth superfluous whitespace
-    ]
-
-
 def normalize_symbol_boundaries(text: str) -> str:
     """Given a text, inserts whitespace between words, commas, quotations, parens, etc.
 
     """
-    steps = _steps()
-    return reduce(lambda x, y: y(x), steps, text)
+    return re_sub(r'\s+', ' ', re_sub(_punct_re(), r' \1 ', text)).strip()
