@@ -16,8 +16,10 @@ def _steps() -> tuple:
     """The normalization steps.
 
     """
+    punct_re = _punct_re()
+
     def add_whitespace(text: str) -> str:
-        return re_sub(_punct_re(), r' \1 ', text)
+        return re_sub(punct_re, r' \1 ', text)
 
     def smooth_superfluous_whitespace(text: str) -> str:
         return re_sub(r'\s+', ' ', text).strip()
@@ -25,8 +27,11 @@ def _steps() -> tuple:
     return (add_whitespace, smooth_superfluous_whitespace)
 
 
+STEPS = _steps()
+
+
 def normalize_symbol_boundaries(text: str) -> str:
     """Given a text, inserts whitespace between words, commas, quotations, parens, etc.
 
     """
-    return reduce(lambda x, y: y(x), _steps(), text)
+    return reduce(lambda x, y: y(x), STEPS, text)
