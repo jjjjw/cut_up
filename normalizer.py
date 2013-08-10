@@ -4,15 +4,45 @@ from re import sub as re_sub
 from string import punctuation
 
 
-def _punct_re() -> type(re_compile('')):
-    """Compile the punctuation substitution regex pattern for use.
+class Normalizer():
+    @property
+    def _punct(self) -> str:
+        """Get the list of punction as an re escaped string.
 
-    """
-    return re_compile(r'([%s])' % re_escape(punctuation))
+        """
+        if not hasattr(self, '_punct_'):
+            self._punct_ = re_escape(punctuation)
 
+        return self._punct_
 
-def normalize_symbol_boundaries(text: str) -> str:
-    """Given a text, inserts whitespace between words, commas, quotations, parens, etc.
+    @property
+    def _punct_re(self) -> type(re_compile('')):
+        """Compile the normalizing punctuation substitution regex pattern for use.
 
-    """
-    return re_sub(r'\s+', ' ', re_sub(_punct_re(), r' \1 ', text)).strip()
+        """
+        if not hasattr(self, '_punct_re_'):
+            self._punct_re_ = re_compile(r'([%s])' % self._punct)
+
+        return self._punct_re_
+
+    @property
+    def _s_punct_re(self) -> type(re_compile('')):
+        """Compile the denormalizing punctuation substitution regex pattern for use.
+
+        """
+        if not hasattr(self, '_s_punct_re_'):
+            self._s_punct_re_ = re_compile(r'(\s[%s])' % self._punct)
+
+        return self._s_punct_re_
+
+    def normalize_symbol_boundaries(self, text: str) -> str:
+        """Given a text, inserts whitespace around commas, quotations, parens, etc.
+
+        """
+        return re_sub(r'\s+', ' ', re_sub(self._punct_re, r' \1 ', text)).strip()
+
+    def denormalize_symbol_boundaries(self, text: str) -> str:
+        """Given a text, trims leading whitespace before commas, quotations, parens, etc.
+
+        """
+        return re_sub(self._s_punct_re, lambda x: x.group()[1:], text)
