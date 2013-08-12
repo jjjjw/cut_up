@@ -1,5 +1,5 @@
-from cutup import _get_blocks
-from cutup import cut_up
+from cut_up import _get_blocks
+from cut_up import cut_up
 from random import Random
 from unittest import TestCase
 
