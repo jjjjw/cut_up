@@ -21,7 +21,7 @@ def cut_up(text: str, seed: int = 1):
     random.shuffle(blocks)
 
     # Reconstitute and denormalize the corpus
-    tokens = list(chain.from_iterable(blocks))
+    tokens = chain.from_iterable(blocks)
     res = " ".join(tokens)
     res = normalizer.denormalize_symbol_boundaries(res)
 
@@ -33,17 +33,17 @@ def _get_blocks(tokens: list, random: Random):
 
     """
     tokens_len = len(tokens)
-    consume_tokens = list(tokens)
     blocks = []
+    pos = 0
 
-    while len(consume_tokens) > 0:
-        i = random.randint(0, tokens_len)
+    while pos < tokens_len:
+        i = random.randint(0, tokens_len) + pos
         try:
-            block = consume_tokens[:i]
+            block = tokens[pos:i]
         except:
-            block = consume_tokens
+            block = tokens[pos:]
 
-        consume_tokens = consume_tokens[len(block):]
+        pos += len(block)
         blocks.append(block)
 
     return blocks
