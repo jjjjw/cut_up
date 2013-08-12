@@ -16,7 +16,7 @@ class Normalizer():
         return self._punct_
 
     @property
-    def _punct_re(self) -> type(re_compile('')):
+    def _punct_re(self) -> type(re_compile(r'')):
         """Compile the normalizing punctuation substitution regex pattern for use.
 
         """
@@ -26,7 +26,7 @@ class Normalizer():
         return self._punct_re_
 
     @property
-    def _s_punct_re(self) -> type(re_compile('')):
+    def _s_punct_re(self) -> type(re_compile(r'')):
         """Compile the denormalizing punctuation substitution regex pattern for use.
 
         """
