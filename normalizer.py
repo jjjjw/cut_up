@@ -21,7 +21,7 @@ class Normalizer():
 
         """
         if not hasattr(self, '_punct_re_'):
-            self._punct_re_ = re_compile(r'([%s])' % self._punct)
+            self._punct_re_ = re_compile(r'([{}])'.format(self._punct))
 
         return self._punct_re_
 
@@ -31,7 +31,7 @@ class Normalizer():
 
         """
         if not hasattr(self, '_s_punct_re_'):
-            self._s_punct_re_ = re_compile(r'(\s[%s])' % self._punct)
+            self._s_punct_re_ = re_compile(r'(\s[{}])'.format(self._punct))
 
         return self._s_punct_re_
 
