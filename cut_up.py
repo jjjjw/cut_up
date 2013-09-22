@@ -3,7 +3,7 @@ from normalizer import Normalizer
 from random import Random
 
 
-def cut_up(text: str, seed: int = 1) -> str:
+def cut_up(corpus: str, seed: int = 1) -> str:
     """An implementation of the [cut-up literary technique]
     (http://en.wikipedia.org/wiki/Cut-up_technique). The seed value allows for repeatable random
     rearrangement.
@@ -14,7 +14,7 @@ def cut_up(text: str, seed: int = 1) -> str:
     random = Random(seed)
 
     # Normalize the corpus
-    tokens = normalizer.normalize_symbol_boundaries(text).split()
+    tokens = normalizer.normalize_symbol_boundaries(corpus).split()
 
     # Segment the tokens and randomize the segments
     blocks = _get_blocks(tokens, random)
